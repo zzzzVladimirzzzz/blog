@@ -1,9 +1,12 @@
-from .models import Post, Group
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
+
+from .models import Group, Post
+
+RANGE_POSTS = 10
 
 
 def index(requests):
-    posts = Post.objects.order_by('-pub_date')[:10]
+    posts = Post.objects.all()[:RANGE_POSTS]
     template = 'posts/index.html'
     main_page = "Последние обновления на сайте"
     context = {
@@ -16,7 +19,7 @@ def index(requests):
 def group_posts(requests, slug):
     group = get_object_or_404(Group, slug=slug)
     template = 'posts/group_list.html'
-    posts = Post.objects.filter(group=group).order_by('-pub_date')[:10]
+    posts = group.posts.all()[:RANGE_POSTS]
     context = {
         'group': group,
         'posts': posts,
