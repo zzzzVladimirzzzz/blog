@@ -1,4 +1,14 @@
-# Byte-compiled / optimized / DLL files
+
+#!/bin/bash
+
+for file in /path/to/json/files/*.json; do
+  value=$(grep -Po '(?<="name":")[^"]*' "$file")
+  new_value="NewValue"
+  sed -i "s/\"name\":\"$value\"/\"name\":\"$new_value\"/g" "$file"
+done
+
+
+ Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
